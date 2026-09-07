@@ -3,75 +3,75 @@ stages:
   split:
     cmd: python src/data/data_split.py
     deps:
-    - path: data/raw/raw.csv
+    - path: data/raw_data/raw.csv
       hash: md5
       md5: 617b56af2992376d5c3e91ad80823898
       size: 333757
     - path: src/data/data_split.py
       hash: md5
-      md5: 054016bab39633f19608c0d4614626ab
-      size: 665
+      md5: 46c6081a1c03bdaa2dcfeda926113c22
+      size: 690
     params:
       params.yaml:
         split:
           test_size: 0.2
           random_state: 42
     outs:
-    - path: data/processed/X_test.csv
+    - path: data/processed_data/X_test.csv
       hash: md5
       md5: 3650992347abd32b2cd42bde8906b31f
       size: 52989
-    - path: data/processed/X_train.csv
+    - path: data/processed_data/X_train.csv
       hash: md5
       md5: 10b9624259cdef969e3830e4f6c0c4c3
       size: 210922
-    - path: data/processed/y_test.csv
+    - path: data/processed_data/y_test.csv
       hash: md5
       md5: 3738f93f228b4914c0c48ba6a9c35298
       size: 6821
-    - path: data/processed/y_train.csv
+    - path: data/processed_data/y_train.csv
       hash: md5
       md5: a9f6c4c8eba38f4177a8cfac86d19e97
       size: 27405
   normalize:
     cmd: python src/data/normalize.py
     deps:
-    - path: data/processed/X_test.csv
+    - path: data/processed_data/X_test.csv
       hash: md5
       md5: 3650992347abd32b2cd42bde8906b31f
       size: 52989
-    - path: data/processed/X_train.csv
+    - path: data/processed_data/X_train.csv
       hash: md5
       md5: 10b9624259cdef969e3830e4f6c0c4c3
       size: 210922
     - path: src/data/normalize.py
       hash: md5
-      md5: 470830ff22a589a3c40738e470057518
-      size: 603
+      md5: 41b067ce6caf73ff142bb9292141a45f
+      size: 623
     outs:
-    - path: data/processed/X_test_scaled.csv
+    - path: data/processed_data/X_test_scaled.csv
       hash: md5
       md5: eb33f401380d429e1f212e5f38cdcc5f
       size: 57391
-    - path: data/processed/X_train_scaled.csv
+    - path: data/processed_data/X_train_scaled.csv
       hash: md5
       md5: be404ef96c19bd97f98a6889f27095d1
       size: 228951
   gridsearch:
     cmd: python src/models/grid_search.py
     deps:
-    - path: data/processed/X_train_scaled.csv
+    - path: data/processed_data/X_train_scaled.csv
       hash: md5
       md5: be404ef96c19bd97f98a6889f27095d1
       size: 228951
-    - path: data/processed/y_train.csv
+    - path: data/processed_data/y_train.csv
       hash: md5
       md5: a9f6c4c8eba38f4177a8cfac86d19e97
       size: 27405
     - path: src/models/grid_search.py
       hash: md5
-      md5: d0717c6f9652f498432437647b3e269a
-      size: 782
+      md5: a1e0ded4dc29fd0418437ade531a13dd
+      size: 792
     params:
       params.yaml:
         gridsearch:
@@ -94,11 +94,11 @@ stages:
   training:
     cmd: python src/models/training.py
     deps:
-    - path: data/processed/X_train_scaled.csv
+    - path: data/processed_data/X_train_scaled.csv
       hash: md5
       md5: be404ef96c19bd97f98a6889f27095d1
       size: 228951
-    - path: data/processed/y_train.csv
+    - path: data/processed_data/y_train.csv
       hash: md5
       md5: a9f6c4c8eba38f4177a8cfac86d19e97
       size: 27405
@@ -108,8 +108,8 @@ stages:
       size: 72
     - path: src/models/training.py
       hash: md5
-      md5: 1a2109c94481fa5ef7e8ac035efcbaa5
-      size: 585
+      md5: 5838a2fa11bc08dd19d8921ff52680d3
+      size: 595
     params:
       params.yaml:
         gridsearch:
@@ -132,11 +132,11 @@ stages:
   evaluate:
     cmd: python src/models/evaluate.py
     deps:
-    - path: data/processed/X_test_scaled.csv
+    - path: data/processed_data/X_test_scaled.csv
       hash: md5
       md5: eb33f401380d429e1f212e5f38cdcc5f
       size: 57391
-    - path: data/processed/y_test.csv
+    - path: data/processed_data/y_test.csv
       hash: md5
       md5: 3738f93f228b4914c0c48ba6a9c35298
       size: 6821
@@ -146,8 +146,8 @@ stages:
       size: 394494
     - path: src/models/evaluate.py
       hash: md5
-      md5: 71784c418cfb8fb4676be9039674fd25
-      size: 693
+      md5: ddce4dc1137534f75859d9d6f75911c4
+      size: 703
     outs:
     - path: data/prediction.csv
       hash: md5

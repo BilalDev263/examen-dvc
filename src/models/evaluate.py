@@ -4,8 +4,8 @@ import pickle
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-X_test = pd.read_csv("data/processed/X_test_scaled.csv")
-y_test = pd.read_csv("data/processed/y_test.csv")
+X_test = pd.read_csv("data/processed_data/X_test_scaled.csv")
+y_test = pd.read_csv("data/processed_data/y_test.csv")
 
 with open("models/gbr_model.pkl", "rb") as f:
     model = pickle.load(f)
